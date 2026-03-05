@@ -96,18 +96,43 @@
 
         smothScroll: function () {
             $(document).on('click', '.smoth-animation', function (event) {
+                const href = $.attr(this, 'href');
+
+                // Si ce n'est pas une ancre, on laisse le navigateur naviguer
+                if (!href || href.charAt(0) !== '#') {
+                    return;
+                }
+
+                const $target = $(href);
+                if ($target.length === 0) {
+                    return;
+                }
+
                 event.preventDefault();
+
                 $('html, body').animate({
-                    scrollTop: $($.attr(this, 'href')).offset().top - 50
+                    scrollTop: $target.offset().top - 50
                 }, 300);
             });
         },
         // two scroll spy
         smothScroll_Two: function () {
             $(document).on('click', '.smoth-animation-two', function (event) {
+                const href = $.attr(this, 'href');
+
+                if (!href || href.charAt(0) !== '#') {
+                    return;
+                }
+
+                const $target = $(href);
+                if ($target.length === 0) {
+                    return;
+                }
+
                 event.preventDefault();
+
                 $('html, body').animate({
-                    scrollTop: $($.attr(this, 'href')).offset().top - 0
+                    scrollTop: $target.offset().top - 0
                 }, 300);
             });
         },
@@ -369,49 +394,51 @@
             };
         },
 
-        mobileMenuActive: function (e) {
+        mobileMenuActive: function () {
 
+            // Ouvrir le menu
             $('.humberger-menu').on('click', function (e) {
                 e.preventDefault();
                 $('.popup-mobile-menu').addClass('menu-open');
-                imJs._html.css({
-                    overflow: 'hidden'
-                })
+                imJs._html.css({ overflow: 'hidden' });
             });
 
-            $('.close-menu-activation, .popup-mobile-menu .primary-menu .nav-item a').on('click', function (e) {
+            // Fermer via bouton X uniquement
+            $('.close-menu-activation').on('click', function (e) {
                 e.preventDefault();
+                closeMobileMenu();
+            });
+
+            // CLIC SUR UN LIEN DU MENU MOBILE
+            // -> on ferme le menu
+            // -> si c'est une route (/about, /skills...), on force la navigation
+            // -> si c'est une ancre (#contact...), on laisse le smooth scroll gérer
+            $(document).on('click', '.popup-mobile-menu .primary-menu .nav-item a', function (e) {
+                const href = $(this).attr('href') || '';
+
+                closeMobileMenu();
+
+                // ancre => on laisse smothScroll gérer (il fera preventDefault si nécessaire)
+                if (href.startsWith('#')) {
+                    return;
+                }
+
+                // route/url => on force la navigation (même si un autre script a fait preventDefault ailleurs)
+                if (href && href !== '#') {
+                    window.location.href = href;
+                }
+            });
+
+            function closeMobileMenu() {
                 $('.popup-mobile-menu').removeClass('menu-open');
-                $('.popup-mobile-menu .has-droupdown > a').removeClass('open').siblings('.submenu').removeClass('active').slideUp('400');
-                imJs._html.css({
-                    overflow: ''
-                })
-            });
+                $('.popup-mobile-menu .has-droupdown > a')
+                    .removeClass('open')
+                    .siblings('.submenu')
+                    .removeClass('active')
+                    .slideUp('400');
 
-            $('.popup-mobile-menu').on('click', function (e) {
-                e.target === this && $('.popup-mobile-menu').removeClass('menu-open');
-                imJs._html.css({
-                    overflow: ''
-                })
-            });
-
-            $('.popup-mobile-menu .has-droupdown > a').on('click', function (e) {
-                e.preventDefault();
-                $(this).siblings('.submenu').toggleClass('active').slideToggle('400');
-                $(this).toggleClass('open');
-                imJs._html.css({
-                    overflow: ''
-                })
-            });
-
-
-            $('.nav-pills .nav-link').on('click', function (e) {
-                $('.rn-popup-mobile-menu').removeClass('menu-open');
-                imJs._html.css({
-                    overflow: ''
-                })
-            })
-
+                imJs._html.css({ overflow: '' });
+            }
         },
 
         awsActivation:function(e){
