@@ -13,6 +13,7 @@ final class ContactController extends AbstractController
     {
         return $this->render('contact/index.html.twig', [
             'controller_name' => 'ContactController',
+            'title' => 'Contact - Mon portfolio'
         ]);
     }
 }
