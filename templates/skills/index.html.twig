@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+<main class="rn-section-gap">
+	<div id="particles-js"></div>
+
+	<section id="experiences" class="rn-experience-area rn-section-gap">
+		<div class="container">
+			<div class="row">
+				<article class="col-12">
+					<div data-aos="fade-up" data-aos-duration="500" data-aos-delay="100" data-aos-once="true" class="section-title text-center">
+						<h2 class="title">Mes compétences</h2>
+					</div>
+				</article>
+                <article class="row mt--10">
+                    <!-- single skill -->
+                    <div class="col-12 col-lg-4 mb-4">
+                        <div data-aos="fade-up" class="experience-style-two">
+                            <div class="experience-left">
+                                <h5 class="title">Backend</h5>
+                                <div class="inner">
+                                    <ul class="card-list">
+                                        <li>PHP (architecture MVC)</li>
+                                        <li>Laravel 10 (Eloquent, routing, middlewares)</li>
+                                        <li>MySQL (modélisation MCD/MLD, normalisation, contraintes)</li>
+                                        <li>PDO & Requêtes préparées</li>
+                                        <li>Gestion des rôles et authentification</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single skill -->
+                    <div class="col-12 col-lg-4 mb-4">
+                        <div data-aos="fade-up" class="experience-style-two">
+                            <div class="experience-left">
+                                <h5 class="title">Architecture & Méthodologie</h5>
+                                <div class="inner">
+                                    <ul class="card-list">
+                                        <li>Séparation des responsabilités (MVC)</li>
+                                        <li>Conception base de données relationnelle</li>
+                                        <li>Kanban (Trello)</li>
+                                        <li>Diagramme de Gantt</li>
+                                        <li>Estimation budgétaire projet</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single skill -->
+                    <div class="col-12 col-lg-4 mb-4">
+                        <div data-aos="fade-up" class="experience-style-two">
+                            <div class="experience-left">
+                                <h5 class="title">Frontend</h5>
+                                <div class="inner">
+                                    <ul class="card-list">
+                                        <li>HTML5 & CSS3</li>
+                                        <li>Responsive / Mobile First</li>
+                                        <li>Intégration WordPress</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single skill -->
+                    <div class="col-12 col-lg-4 mb-4">
+                        <div data-aos="fade-up" class="experience-style-two">
+                            <div class="experience-left">
+                                <h5 class="title">Déploiement & Production</h5>
+                                <div class="inner">
+                                    <ul class="card-list">
+                                        <li>Mise en production d'application Laravel</li>
+                                        <li>Configuration environnement (.env, sécurité)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single skill -->
+                    <div class="col-12 col-lg-4 mb-4">
+                        <div data-aos="fade-up" class="experience-style-two">
+                            <div class="experience-left">
+                                <h5 class="title">Outils</h5>
+                                <div class="inner">
+                                    <ul class="card-list">
+                                        <li>Git / GitHub</li>
+                                        <li>VS Code</li>
+                                        <li>Trello</li>
+                                        <li>Illustrator / Photoshop</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+{% endblock %}

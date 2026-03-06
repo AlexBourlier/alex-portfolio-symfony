@@ -1,6 +1,7 @@
 when@dev:
     web_profiler:
         toolbar: true
+        intercept_redirects: false
 
     framework:
         profiler:
@@ -9,5 +10,7 @@ when@dev:
 when@test:
     framework:
         profiler:
+            enabled: true
             collect: false
             collect_serializer_data: true
+
