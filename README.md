@@ -106,6 +106,18 @@ docker/
 
 ---
 
+## Database Design
+
+### MCD
+
+![MCD](./capture/mcd.png)
+
+### MLD
+
+![MLD](./capture/mld.png)
+
+---
+
 ## Objectif du projet
 
 * Mettre en valeur mes projets techniques
