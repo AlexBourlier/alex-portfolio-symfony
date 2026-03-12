@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SkillsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SkillsRepository::class)]
@@ -28,6 +30,24 @@ class Skills
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
+
+    /**
+     * @var Collection<int, Achievements>
+     */
+    #[ORM\ManyToMany(targetEntity: Achievements::class, mappedBy: 'skill_id')]
+    private Collection $achievements;
+
+    /**
+     * @var Collection<int, ProjectSkill>
+     */
+    #[ORM\ManyToMany(targetEntity: ProjectSkill::class, mappedBy: 'skill_id')]
+    private Collection $projectSkills;
+
+    public function __construct()
+    {
+        $this->achievements = new ArrayCollection();
+        $this->projectSkills = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +110,60 @@ class Skills
     public function setUpdatedAt(\DateTimeImmutable $updated_at): static
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Achievements>
+     */
+    public function getAchievements(): Collection
+    {
+        return $this->achievements;
+    }
+
+    public function addAchievement(Achievements $achievement): static
+    {
+        if (!$this->achievements->contains($achievement)) {
+            $this->achievements->add($achievement);
+            $achievement->addSkillId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAchievement(Achievements $achievement): static
+    {
+        if ($this->achievements->removeElement($achievement)) {
+            $achievement->removeSkillId($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProjectSkill>
+     */
+    public function getProjectSkills(): Collection
+    {
+        return $this->projectSkills;
+    }
+
+    public function addProjectSkill(ProjectSkill $projectSkill): static
+    {
+        if (!$this->projectSkills->contains($projectSkill)) {
+            $this->projectSkills->add($projectSkill);
+            $projectSkill->addSkillId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjectSkill(ProjectSkill $projectSkill): static
+    {
+        if ($this->projectSkills->removeElement($projectSkill)) {
+            $projectSkill->removeSkillId($this);
+        }
 
         return $this;
     }

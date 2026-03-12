@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ProjectsRepository;
+use App\Repository\AchievementsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ProjectsRepository::class)]
-class Projects
+#[ORM\Entity(repositoryClass: AchievementsRepository::class)]
+class Achievements
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,17 +19,14 @@ class Projects
     #[ORM\Column(length: 100)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $subtitle = null;
+    /**
+     * @var Collection<int, Skills>
+     */
+    #[ORM\ManyToMany(targetEntity: Skills::class, inversedBy: 'achievements')]
+    private Collection $skill_id;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $year = null;
-
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 150, nullable: true)]
     private ?string $picture = null;
-
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $speciality = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
@@ -40,15 +37,9 @@ class Projects
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
-    /**
-     * @var Collection<int, ProjectSkill>
-     */
-    #[ORM\ManyToMany(targetEntity: ProjectSkill::class, mappedBy: 'project_id')]
-    private Collection $projectSkills;
-
     public function __construct()
     {
-        $this->projectSkills = new ArrayCollection();
+        $this->skill_id = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -68,26 +59,26 @@ class Projects
         return $this;
     }
 
-    public function getSubtitle(): ?string
+    /**
+     * @return Collection<int, Skills>
+     */
+    public function getSkillId(): Collection
     {
-        return $this->subtitle;
+        return $this->skill_id;
     }
 
-    public function setSubtitle(string $subtitle): static
+    public function addSkillId(Skills $skillId): static
     {
-        $this->subtitle = $subtitle;
+        if (!$this->skill_id->contains($skillId)) {
+            $this->skill_id->add($skillId);
+        }
 
         return $this;
     }
 
-    public function getYear(): ?\DateTime
+    public function removeSkillId(Skills $skillId): static
     {
-        return $this->year;
-    }
-
-    public function setYear(\DateTime $year): static
-    {
-        $this->year = $year;
+        $this->skill_id->removeElement($skillId);
 
         return $this;
     }
@@ -97,21 +88,9 @@ class Projects
         return $this->picture;
     }
 
-    public function setPicture(string $picture): static
+    public function setPicture(?string $picture): static
     {
         $this->picture = $picture;
-
-        return $this;
-    }
-
-    public function getSpeciality(): ?string
-    {
-        return $this->speciality;
-    }
-
-    public function setSpeciality(?string $speciality): static
-    {
-        $this->speciality = $speciality;
 
         return $this;
     }
@@ -148,33 +127,6 @@ class Projects
     public function setUpdatedAt(\DateTimeImmutable $updated_at): static
     {
         $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ProjectSkill>
-     */
-    public function getProjectSkills(): Collection
-    {
-        return $this->projectSkills;
-    }
-
-    public function addProjectSkill(ProjectSkill $projectSkill): static
-    {
-        if (!$this->projectSkills->contains($projectSkill)) {
-            $this->projectSkills->add($projectSkill);
-            $projectSkill->addProjectId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProjectSkill(ProjectSkill $projectSkill): static
-    {
-        if ($this->projectSkills->removeElement($projectSkill)) {
-            $projectSkill->removeProjectId($this);
-        }
 
         return $this;
     }
