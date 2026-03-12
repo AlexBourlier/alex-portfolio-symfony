@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DomainRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DomainRepository::class)]
@@ -21,6 +23,17 @@ class Domain
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
+
+    /**
+     * @var Collection<int, Compentencies>
+     */
+    #[ORM\OneToMany(targetEntity: Compentencies::class, mappedBy: 'domain_id')]
+    private Collection $compentencies;
+
+    public function __construct()
+    {
+        $this->compentencies = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -59,6 +72,36 @@ class Domain
     public function setUpdatedAt(\DateTimeImmutable $updated_at): static
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Compentencies>
+     */
+    public function getCompentencies(): Collection
+    {
+        return $this->compentencies;
+    }
+
+    public function addCompentency(Compentencies $compentency): static
+    {
+        if (!$this->compentencies->contains($compentency)) {
+            $this->compentencies->add($compentency);
+            $compentency->setDomainId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompentency(Compentencies $compentency): static
+    {
+        if ($this->compentencies->removeElement($compentency)) {
+            // set the owning side to null (unless already changed)
+            if ($compentency->getDomainId() === $this) {
+                $compentency->setDomainId(null);
+            }
+        }
 
         return $this;
     }
