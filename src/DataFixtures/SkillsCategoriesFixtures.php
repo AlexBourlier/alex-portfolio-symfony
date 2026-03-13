@@ -5,20 +5,23 @@ namespace App\DataFixtures;
 use App\Entity\SkillsCategory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
 
 class SkillsCategoriesFixtures extends Fixture
 {
+    public const BACKEND = 'skills_category_backend';
+    public const FRONTEND = 'skills_category_frontend';
+    
     public function load(ObjectManager $manager): void
     {
-        $faker = Factory::create('fr_FR');
+        $backend = new SkillsCategory();
+        $backend->setTitle('Backend');
+        $manager->persist($backend);
+        $this->addReference(self::BACKEND, $backend);
 
-        for ($i = 0; $i < 2; $i++) {
-            $skillsCategory = new SkillsCategory();
-            $skillsCategory->setTitle($faker->word());
-            
-            $manager->persist($skillsCategory);
-        }
+        $frontend = new SkillsCategory();
+        $frontend->setTitle('Frontend');
+        $manager->persist($frontend);
+        $this->addReference(self::FRONTEND, $frontend);
 
         $manager->flush();
     }
