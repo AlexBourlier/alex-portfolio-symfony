@@ -19,20 +19,22 @@ class SkillsCategory
     private ?string $title = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $updated_at = null;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * @var Collection<int, Skills>
      */
-    #[ORM\OneToMany(targetEntity: Skills::class, mappedBy: 'skills_category_id')]
+    #[ORM\OneToMany(targetEntity: Skills::class, mappedBy: 'skillsCategory')]
     private Collection $skills;
 
     public function __construct()
     {
         $this->skills = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -54,24 +56,24 @@ class SkillsCategory
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): static
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -88,7 +90,7 @@ class SkillsCategory
     {
         if (!$this->skills->contains($skill)) {
             $this->skills->add($skill);
-            $skill->setSkillsCategoryId($this);
+            $skill->setSkillsCategory($this);
         }
 
         return $this;
@@ -97,9 +99,8 @@ class SkillsCategory
     public function removeSkill(Skills $skill): static
     {
         if ($this->skills->removeElement($skill)) {
-            // set the owning side to null (unless already changed)
-            if ($skill->getSkillsCategoryId() === $this) {
-                $skill->setSkillsCategoryId(null);
+            if ($skill->getSkillsCategory() === $this) {
+                $skill->setSkillsCategory(null);
             }
         }
 

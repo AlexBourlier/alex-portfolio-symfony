@@ -17,7 +17,7 @@ class Skills
 
     #[ORM\ManyToOne(inversedBy: 'skills')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?SkillsCategory $skills_category_id = null;
+    private ?SkillsCategory $skillsCategory = null;
 
     #[ORM\Column(length: 100)]
     private ?string $title = null;
@@ -26,27 +26,29 @@ class Skills
     private ?int $percentage = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $updated_at = null;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * @var Collection<int, Achievements>
      */
-    #[ORM\ManyToMany(targetEntity: Achievements::class, mappedBy: 'skill_id')]
+    #[ORM\OneToMany(targetEntity: Achievements::class, mappedBy: 'skill')]
     private Collection $achievements;
 
     /**
      * @var Collection<int, ProjectSkill>
      */
-    #[ORM\ManyToMany(targetEntity: ProjectSkill::class, mappedBy: 'skill_id')]
+    #[ORM\OneToMany(targetEntity: ProjectSkill::class, mappedBy: 'skill')]
     private Collection $projectSkills;
 
     public function __construct()
     {
         $this->achievements = new ArrayCollection();
         $this->projectSkills = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -54,14 +56,14 @@ class Skills
         return $this->id;
     }
 
-    public function getSkillsCategoryId(): ?SkillsCategory
+    public function getSkillsCategory(): ?SkillsCategory
     {
-        return $this->skills_category_id;
+        return $this->skillsCategory;
     }
 
-    public function setSkillsCategoryId(?SkillsCategory $skills_category_id): static
+    public function setSkillsCategory(?SkillsCategory $skillsCategory): static
     {
-        $this->skills_category_id = $skills_category_id;
+        $this->skillsCategory = $skillsCategory;
 
         return $this;
     }
@@ -92,24 +94,24 @@ class Skills
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): static
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -126,7 +128,7 @@ class Skills
     {
         if (!$this->achievements->contains($achievement)) {
             $this->achievements->add($achievement);
-            $achievement->addSkillId($this);
+            $achievement->setSkill($this);
         }
 
         return $this;
@@ -135,7 +137,9 @@ class Skills
     public function removeAchievement(Achievements $achievement): static
     {
         if ($this->achievements->removeElement($achievement)) {
-            $achievement->removeSkillId($this);
+            if ($achievement->getSkill() === $this) {
+                $achievement->setSkill(null);
+            }
         }
 
         return $this;
@@ -153,7 +157,7 @@ class Skills
     {
         if (!$this->projectSkills->contains($projectSkill)) {
             $this->projectSkills->add($projectSkill);
-            $projectSkill->addSkillId($this);
+            $projectSkill->setSkill($this);
         }
 
         return $this;
@@ -162,7 +166,9 @@ class Skills
     public function removeProjectSkill(ProjectSkill $projectSkill): static
     {
         if ($this->projectSkills->removeElement($projectSkill)) {
-            $projectSkill->removeSkillId($this);
+            if ($projectSkill->getSkill() === $this) {
+                $projectSkill->setSkill(null);
+            }
         }
 
         return $this;

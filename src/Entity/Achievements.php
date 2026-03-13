@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\AchievementsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,11 +17,9 @@ class Achievements
     #[ORM\Column(length: 100)]
     private ?string $title = null;
 
-    /**
-     * @var Collection<int, Skills>
-     */
-    #[ORM\ManyToMany(targetEntity: Skills::class, inversedBy: 'achievements')]
-    private Collection $skill_id;
+    #[ORM\ManyToOne(inversedBy: 'achievements')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Skills $skill = null;
 
     #[ORM\Column(length: 150, nullable: true)]
     private ?string $picture = null;
@@ -32,14 +28,15 @@ class Achievements
     private ?string $description = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $updated_at = null;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct()
     {
-        $this->skill_id = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -59,26 +56,14 @@ class Achievements
         return $this;
     }
 
-    /**
-     * @return Collection<int, Skills>
-     */
-    public function getSkillId(): Collection
+    public function getSkill(): ?Skills
     {
-        return $this->skill_id;
+        return $this->skill;
     }
 
-    public function addSkillId(Skills $skillId): static
+    public function setSkill(?Skills $skill): static
     {
-        if (!$this->skill_id->contains($skillId)) {
-            $this->skill_id->add($skillId);
-        }
-
-        return $this;
-    }
-
-    public function removeSkillId(Skills $skillId): static
-    {
-        $this->skill_id->removeElement($skillId);
+        $this->skill = $skill;
 
         return $this;
     }
@@ -109,24 +94,24 @@ class Achievements
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): static
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

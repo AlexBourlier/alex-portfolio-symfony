@@ -23,7 +23,7 @@ class Projects
     private ?string $subtitle = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $year = null;
+    private ?\DateTimeInterface $year = null;
 
     #[ORM\Column(length: 100)]
     private ?string $picture = null;
@@ -35,20 +35,22 @@ class Projects
     private ?string $description = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $updated_at = null;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * @var Collection<int, ProjectSkill>
      */
-    #[ORM\ManyToMany(targetEntity: ProjectSkill::class, mappedBy: 'project_id')]
+    #[ORM\OneToMany(targetEntity: ProjectSkill::class, mappedBy: 'project')]
     private Collection $projectSkills;
 
     public function __construct()
     {
         $this->projectSkills = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -64,7 +66,6 @@ class Projects
     public function setTitle(string $title): static
     {
         $this->title = $title;
-
         return $this;
     }
 
@@ -76,19 +77,17 @@ class Projects
     public function setSubtitle(string $subtitle): static
     {
         $this->subtitle = $subtitle;
-
         return $this;
     }
 
-    public function getYear(): ?\DateTime
+    public function getYear(): ?\DateTimeInterface
     {
         return $this->year;
     }
 
-    public function setYear(\DateTime $year): static
+    public function setYear(\DateTimeInterface $year): static
     {
         $this->year = $year;
-
         return $this;
     }
 
@@ -100,7 +99,6 @@ class Projects
     public function setPicture(string $picture): static
     {
         $this->picture = $picture;
-
         return $this;
     }
 
@@ -112,7 +110,6 @@ class Projects
     public function setSpeciality(?string $speciality): static
     {
         $this->speciality = $speciality;
-
         return $this;
     }
 
@@ -124,31 +121,28 @@ class Projects
     public function setDescription(?string $description): static
     {
         $this->description = $description;
-
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->created_at = $created_at;
-
+        $this->createdAt = $createdAt;
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): static
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
-        $this->updated_at = $updated_at;
-
+        $this->updatedAt = $updatedAt;
         return $this;
     }
 
@@ -164,7 +158,7 @@ class Projects
     {
         if (!$this->projectSkills->contains($projectSkill)) {
             $this->projectSkills->add($projectSkill);
-            $projectSkill->addProjectId($this);
+            $projectSkill->setProject($this);
         }
 
         return $this;
@@ -173,7 +167,9 @@ class Projects
     public function removeProjectSkill(ProjectSkill $projectSkill): static
     {
         if ($this->projectSkills->removeElement($projectSkill)) {
-            $projectSkill->removeProjectId($this);
+            if ($projectSkill->getProject() === $this) {
+                $projectSkill->setProject(null);
+            }
         }
 
         return $this;

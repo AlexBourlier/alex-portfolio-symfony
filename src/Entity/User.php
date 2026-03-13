@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: '`user`')]
 class User
 {
     #[ORM\Id]
@@ -20,14 +21,14 @@ class User
     #[ORM\Column(length: 50)]
     private ?string $lastname = null;
 
-    #[ORM\Column(length: 150)]
+    #[ORM\Column(length: 150, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $phone = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $a_propos = null;
+    private ?string $aPropos = null;
 
     #[ORM\Column(length: 150, nullable: true)]
     private ?string $poste = null;
@@ -39,10 +40,16 @@ class User
     private ?string $password = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $updated_at = null;
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -57,7 +64,6 @@ class User
     public function setFirstname(string $firstname): static
     {
         $this->firstname = $firstname;
-
         return $this;
     }
 
@@ -69,7 +75,6 @@ class User
     public function setLastname(string $lastname): static
     {
         $this->lastname = $lastname;
-
         return $this;
     }
 
@@ -81,7 +86,6 @@ class User
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -93,19 +97,17 @@ class User
     public function setPhone(?string $phone): static
     {
         $this->phone = $phone;
-
         return $this;
     }
 
     public function getAPropos(): ?string
     {
-        return $this->a_propos;
+        return $this->aPropos;
     }
 
-    public function setAPropos(?string $a_propos): static
+    public function setAPropos(?string $aPropos): static
     {
-        $this->a_propos = $a_propos;
-
+        $this->aPropos = $aPropos;
         return $this;
     }
 
@@ -117,7 +119,6 @@ class User
     public function setPoste(?string $poste): static
     {
         $this->poste = $poste;
-
         return $this;
     }
 
@@ -129,7 +130,6 @@ class User
     public function setCity(?string $city): static
     {
         $this->city = $city;
-
         return $this;
     }
 
@@ -141,31 +141,28 @@ class User
     public function setPassword(?string $password): static
     {
         $this->password = $password;
-
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->created_at = $created_at;
-
+        $this->createdAt = $createdAt;
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): static
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
-        $this->updated_at = $updated_at;
-
+        $this->updatedAt = $updatedAt;
         return $this;
     }
 }

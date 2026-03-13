@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\Compentencies;
+use App\Entity\Competencies;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Compentencies>
+ * @extends ServiceEntityRepository<Competencies>
  */
-class CompentenciesRepository extends ServiceEntityRepository
+class CompetenciesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Compentencies::class);
+        parent::__construct($registry, Competencies::class);
     }
 
 //    /**
-//     * @return Compentencies[] Returns an array of Compentencies objects
+//     * @return Competencies[] Returns an array of Competencies objects
 //     */
 //    public function findByExampleField($value): array
 //    {

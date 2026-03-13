@@ -2,18 +2,20 @@
 
 namespace App\Entity;
 
-use App\Repository\DomainRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\CompetenciesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: DomainRepository::class)]
-class Domain
+#[ORM\Entity(repositoryClass: CompetenciesRepository::class)]
+class Competencies
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\ManyToOne(inversedBy: 'competencies')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Domain $domain = null;
 
     #[ORM\Column(length: 100)]
     private ?string $title = null;
@@ -24,15 +26,8 @@ class Domain
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    /**
-     * @var Collection<int, Competencies>
-     */
-    #[ORM\OneToMany(targetEntity: Competencies::class, mappedBy: 'domain')]
-    private Collection $competencies;
-
     public function __construct()
     {
-        $this->competencies = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
     }
@@ -40,6 +35,18 @@ class Domain
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getDomain(): ?Domain
+    {
+        return $this->domain;
+    }
+
+    public function setDomain(?Domain $domain): static
+    {
+        $this->domain = $domain;
+
+        return $this;
     }
 
     public function getTitle(): ?string
@@ -74,35 +81,6 @@ class Domain
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Competencies>
-     */
-    public function getCompetencies(): Collection
-    {
-        return $this->competencies;
-    }
-
-    public function addCompetency(Competencies $competency): static
-    {
-        if (!$this->competencies->contains($competency)) {
-            $this->competencies->add($competency);
-            $competency->setDomain($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCompetency(Competencies $competency): static
-    {
-        if ($this->competencies->removeElement($competency)) {
-            if ($competency->getDomain() === $this) {
-                $competency->setDomain(null);
-            }
-        }
 
         return $this;
     }
