@@ -30,6 +30,7 @@
 		{% block body %}{% endblock %}
 
         {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
             <script src="{{ asset('js/vendor/jquery.js') }}"></script>
             <script src="{{ asset('js/vendor/bootstrap.js') }}"></script>
 
