@@ -5,11 +5,9 @@ namespace App\DataFixtures;
 use App\Entity\Domain;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
 
 class DomainFixtures extends Fixture
 {
-
     public const DEVELOPMENT = 'domain_development';
     public const AI = 'domain_ai';
     public const CYBERSECURITY = 'domain_cybersecurity';
@@ -18,21 +16,20 @@ class DomainFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $faker = Factory::create('fr_FR');
-
         $domains = [
-            'Développement Web',
-            'Intelligence Artificielle',
-            'Cybersécurité',
-            'Cloud Computing',
-            'Data Science',
+            self::DEVELOPMENT => 'Développement Web',
+            self::AI => 'Intelligence Artificielle',
+            self::CYBERSECURITY => 'Cybersécurité',
+            self::CLOUD => 'Cloud Computing',
+            self::DATA_SCIENCE => 'Data Science',
         ];
 
-        foreach ($domains as $domainName) {
+        foreach ($domains as $reference => $title) {
             $domain = new Domain();
-            $domain->setTitle($domainName);
+            $domain->setTitle($title);
+
             $manager->persist($domain);
-            $this->addReference('domain_' . strtolower(str_replace(' ', '_', $domainName)), $domain);
+            $this->addReference($reference, $domain);
         }
 
         $manager->flush();
