@@ -16,13 +16,13 @@ class DomainRepository extends ServiceEntityRepository
         parent::__construct($registry, Domain::class);
     }
 
-    // Retourner les catégories de compétences
-    public function findAllDomainsSkill(): array
+    // Retourner les catégories de compétences avec leurs compétences associées
+    public function findAllDomainsWithCompetencies(): array
     {
         return $this->createQueryBuilder('d')
-            ->select(
-                'd.title'
-            )
+            ->leftJoin ('d.competencies', 'c')
+            ->addSelect('c')
+            ->orderBy('d.title', 'ASC')
             ->getQuery()
             ->getResult();
     }

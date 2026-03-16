@@ -23,11 +23,9 @@
                                 <h5 class="title">{{ domain.title }}</h5>
                                 <div class="inner">
                                     <ul class="card-list">
-                                        <li>PHP (architecture MVC)</li>
-                                        <li>Laravel 10 (Eloquent, routing, middlewares)</li>
-                                        <li>MySQL (modélisation MCD/MLD, normalisation, contraintes)</li>
-                                        <li>PDO & Requêtes préparées</li>
-                                        <li>Gestion des rôles et authentification</li>
+                                        {% for competency in domain.competencies %}
+                                            <li>{{ competency.title }}</li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>

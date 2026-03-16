@@ -12,7 +12,7 @@ final class SkillsController extends AbstractController
     #[Route('/skills', name: 'app_skills')]
     public function index(DomainRepository $domainsRepository): Response
     {
-        $domains = $domainsRepository->findAllDomainsSkill();
+        $domains = $domainsRepository->findAllDomainsWithCompetencies();
 
         return $this->render('skills/index.html.twig', [
             'controller_name' => 'SkillsController',
