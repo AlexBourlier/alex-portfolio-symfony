@@ -13,6 +13,7 @@
                         <div class="order-2 order-xl-1 col-lg-12 col-xl-5 mt_lg--50 mt_md--50 mt_sm--50">
                             <div class="slider-info">
                                 <div class="row">
+                                {% for user in users %}
                                     <article class="col-xl-12 col-lg-12 col-12">
                                         <div class="user-info-top">
                                             <div class="user-info-header">
@@ -21,31 +22,27 @@
                                                 </div>
                                                 <h2 class="title">
                                                     Bonjour ! Je suis
-                                                    <span>Alexandre Bourlier</span>
+                                                    <span>{{ user.firstname}} {{ user.lastname }}</span>
                                                 </h2>
-                                                <p class="disc">Développeur web orienté backend et architecture applicative.
-                                                    Expérience sur projets réels en production (Laravel, PHP, MySQL).
-                                                    Autonome, structuré et attentif à la qualité du code et à la conception des données.
-                                                    À la recherche d’un stage et ouvert à des missions freelance ponctuelles.
-                                                </p>
+                                                <p class="disc">{{ user.aPropos }}</p>
                                             </div>
                                             <div class="user-info-footer">
                                                 <div class="info">
                                                     <i data-feather="file"></i>
-                                                    <span>Développeur web & architecte applicatif</span>
+                                                    <span>{{ user.poste }}</span>
                                                 </div>
                                                 <div class="info">
                                                     <i data-feather="mail"></i>
-                                                    <span>alexandre@bourlier.email</span>
+                                                    <span>{{ user.email }}</span>
                                                 </div>
                                                 <div class="info">
                                                     <i data-feather="map-pin"></i>
-                                                    <span>Tours, 37</span>
+                                                    <span>{{ user.city }}, 37</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </article>
-
+                                {% endfor %}
                                     <article class="col-xl-12 col-lg-12 col-12">
                                         <div class="user-info-bottom">
                                             <span>Télécharger mon CV ou contactez-moi pour discuter de votre projet !</span>
