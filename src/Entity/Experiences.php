@@ -14,6 +14,9 @@ class Experiences
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
+
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateDebut = null;
 
@@ -39,6 +42,18 @@ class Experiences
     {
         return $this->id;
     }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): static
+    {
+        $this->title = $title;
+
+        return $this;
+    }   
 
     public function getDateDebut(): ?\DateTimeInterface
     {

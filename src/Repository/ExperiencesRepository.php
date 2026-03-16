@@ -16,28 +16,17 @@ class ExperiencesRepository extends ServiceEntityRepository
         parent::__construct($registry, Experiences::class);
     }
 
-    //    /**
-    //     * @return Experiences[] Returns an array of Experiences objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('e.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Experiences
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findAllExperiences(): array
+    {
+        return $this->createQueryBuilder('e')
+            ->select(
+                'e.title,
+                e.dateDebut,
+                e.dateFin,
+                e.description'
+                )
+            ->orderBy('e.dateDebut', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

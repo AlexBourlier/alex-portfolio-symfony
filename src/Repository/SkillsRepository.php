@@ -16,4 +16,13 @@ class SkillsRepository extends ServiceEntityRepository
         parent::__construct($registry, Skills::class);
     }
 
+    public function findAllSkillsWithCategories(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.skills_category', 's')
+            ->addSelect('s')
+            ->orderBy('c.title', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

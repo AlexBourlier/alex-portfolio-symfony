@@ -16,28 +16,14 @@ class SkillsCategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, SkillsCategory::class);
     }
 
-    //    /**
-    //     * @return SkillsCategory[] Returns an array of SkillsCategory objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('s.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?SkillsCategory
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        public function findAllCategoriesWithSkills(): array
+        {
+            return $this->createQueryBuilder('sc')
+                ->leftJoin('sc.skills', 's')
+                ->addSelect('s')
+                ->orderBy('sc.title', 'ASC')
+                ->addOrderBy('s.title', 'ASC')
+                ->getQuery()
+                ->getResult();
+        }
 }
