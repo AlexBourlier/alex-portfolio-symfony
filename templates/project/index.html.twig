@@ -23,88 +23,63 @@
 				class="col-12 mt_experience">
 
 				<!-- single skills -->
+				{% for project in projects %}
 				<div data-aos="fade-up" data-aos-duration="500" data-aos-delay="100" data-aos-once="true" class="experience-style-two">
 					<div class="experience-left">
 						<div class="experience-image">
-							<img src={{ asset("/assets/images/portfolio/portfolio-01.jpg") }} alt="Personal Portfolio">
+							<img src="{{ project.picture }}" alt="{{project.title}}">
 						</div>
 						<div class="experience-center">
-							<span class="date">2022</span>
+							<span class="date">{{project.year|date('Y')}}</span>
 							<h4 class="experience-title">
-								Billard Score
+								{{project.title}}
 							</h4>
 							<h6 class="subtitle">
-								Web Designer & Développeur
+								{{project.subtitle}}
 							</h6>
-							<p class="disc">une application pour enregistrer ses parties de billards !</p>
+							<p class="disc">{{ project.description|split(' ')|slice(0, 25)|join(' ') }}...</p>
 
 						</div>
 					</div>
 					<div class="experience-right">
 						<div class="experience-footer">
-							<a class="rn-btn" href="{{ path('app_project_show', {'slug': 'billard-score'}) }}">
+							<a class="rn-btn" href="{{ path('app_project_show', {'slug': (project.title|replace({' ': '-'})) }) }}">
 								<span>EN VOIR PLUS</span>
 							</a>
 						</div>
 					</div>
 				</div>
+				{% else %}
+				<p>Aucun projet trouvé.</p>
+				{% endfor %}
 				<!-- single skills -->
+				<!-- Pagination -->
+				{% if totalPages > 1 %}
+					<nav class="mt-4">
+						<ul class="pagination justify-content-center">
 
-				<!-- single skills -->
-				<div data-aos="fade-up" data-aos-duration="500" data-aos-delay="100" data-aos-once="true" class="experience-style-two">
-					<div class="experience-left">
-						<div class="experience-image">
-							<img src={{ asset("/assets/images/portfolio/portfolio-01.jpg") }} alt="Personal Portfolio">
-						</div>
-						<div class="experience-center">
-							<span class="date">2022</span>
-							<h4 class="experience-title">
-								Billard Score
-							</h4>
-							<h6 class="subtitle">
-								Web Designer & Développeur
-							</h6>
-							<p class="disc">une application pour enregistrer ses parties de billards !</p>
+							{% if currentPage > 1 %}
+								<li class="page-item">
+									<a class="page-link rn-btn" href="{{ path('app_project', { page: currentPage - 1 }) }}">Précédent</a>
+								</li>
+							{% endif %}
 
-						</div>
-					</div>
-					<div class="experience-right">
-						<div class="experience-footer">
-							<a class="rn-btn" href="{{ path('app_project_show', {'slug': 'billard-score'}) }}">
-								<span>EN VOIR PLUS</span>
-							</a>
-						</div>
-					</div>
-				</div>
-				<!-- single skills -->
+							{% for page in 1..totalPages %}
+								<li class="page-item {% if page == currentPage %}active{% endif %}">
+									<a class="page-link rn-btn" href="{{ path('app_project', { page: page }) }}">{{ page }}</a>
+								</li>
+							{% endfor %}
 
-				<!-- single skills -->
-				<div data-aos="fade-up" data-aos-duration="500" data-aos-delay="100" data-aos-once="true" class="experience-style-two">
-					<div class="experience-left">
-						<div class="experience-image">
-							<img src={{ asset("/assets/images/portfolio/portfolio-01.jpg") }} alt="Personal Portfolio">
-						</div>
-						<div class="experience-center">
-							<span class="date">2022</span>
-							<h4 class="experience-title">
-								Billard Score
-							</h4>
-							<h6 class="subtitle">
-								Web Designer & Développeur
-							</h6>
-							<p class="disc">une application pour enregistrer ses parties de billards !</p>
+							{% if currentPage < totalPages %}
+								<li class="page-item">
+									<a class="page-link rn-btn" href="{{ path('app_project', { page: currentPage + 1 }) }}">Suivant</a>
+								</li>
+							{% endif %}
 
-						</div>
-					</div>
-					<div class="experience-right">
-						<div class="experience-footer">
-							<a class="rn-btn" href="{{ path('app_project_show', {'slug': 'billard-score'}) }}">
-								<span>EN VOIR PLUS</span>
-							</a>
-						</div>
-					</div>
-				</div>
-				<!-- single skills -->
+						</ul>
+					</nav>
+				{% endif %}
+				<!-- Pagination -->
 
 			</div>
 		</div>
