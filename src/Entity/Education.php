@@ -17,6 +17,9 @@ class Education
     #[ORM\Column(length: 100)]
     private ?string $title = null;
 
+    #[ORM\Column(length: 100)]
+    private ?string $institution = null;
+
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateDebut = null;
 
@@ -51,6 +54,18 @@ class Education
     public function setTitle(string $title): static
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getInstitution(): ?string
+    {
+        return $this->institution;
+    }
+
+    public function setInstitution(string $institution): static
+    {
+        $this->institution = $institution;
 
         return $this;
     }

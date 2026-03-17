@@ -15,17 +15,28 @@ class CompetenciesFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 0; $i < 10; $i++) {
-            $competency = new Competencies();
-            $competency->setTitle($faker->sentence(3));
-            $competency->setDomain(
-                $this->getReference(DomainFixtures::DEVELOPMENT, Domain::class)
-            );
+        $domains = [
+            DomainFixtures::DEVELOPMENT,
+            DomainFixtures::AI,
+            DomainFixtures::CYBERSECURITY,
+            DomainFixtures::CLOUD,
+            DomainFixtures::DATA_SCIENCE,
+        ];
 
-            $manager->persist($competency);
+        foreach ($domains as $domainReference) {
+            $domain = $this->getReference($domainReference, Domain::class);
+
+            for ($i = 0; $i < 10; $i++) {
+                $competency = new Competencies();
+                $competency->setTitle($faker->sentence(3));
+                $competency->setDomain($domain);
+    
+                $manager->persist($competency);
+            }
         }
-
+        
         $manager->flush();
+
     }
 
     public function getDependencies(): array

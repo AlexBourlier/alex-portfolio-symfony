@@ -29,4 +29,12 @@ class ExperiencesRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findMinDate(): ?array
+    {
+        return $this->createQueryBuilder('e')
+            ->select('MIN(e.dateDebut) AS minDate')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
