@@ -19,7 +19,7 @@ class AchievementsFixtures extends Fixture implements DependentFixtureInterface
             $achievement = new Achievements();
             $achievement->setTitle($faker->sentence(3));
             $achievement->setDescription($faker->paragraph());
-            $achievement->setPicture($faker->imageUrl());
+            $achievement->setPicture("https://picsum.photos/640/480");
             $achievement->setSkill(
                 $this->getReference(SkillsFixtures::PHP, Skills::class)
             );
