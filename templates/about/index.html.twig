@@ -42,40 +42,36 @@
 								<!-- Start Skill List Area  -->
 								<div class="col-lg-12 col-md-12 col-12">
 									<div class="content">
-										<span class="subtitle">2019 - 2026</span>
+										<span class="subtitle">
+											{% if educationPeriods.minDate and educationPeriods.maxDate %}
+												{{ educationPeriods.minDate|date('Y') }} - {{ educationPeriods.maxDate|date('Y') }}
+											{% endif %}
+										</span>
 										<h3 class="maintitle">Formation</h3>
 										<div
 											class="experience-list">
 
-											<!-- Start Single List  -->
-											<div class="resume-single-list">
-												<div class="inner">
-													<div class="heading">
-														<div class="title">
-															<h4>Formation Développeur Web / Web Mobile</h4>
-															<span>Centre Européen de Formation (2025 - 2026)</span>
+											{% for education in educations %}
+												<!-- Start Single List  -->
+												<div data-aos="fade-up" data-aos-duration="500" data-aos-delay="300" data-aos-once="true" class="resume-single-list">
+													<div class="inner">
+														<div class="heading">
+															<div class="title">
+																<h4>{{ education.title }}</h4>
+																<span>{{ education.institution}} ({{education.dateDebut|date('Y')}}
+																	-
+																	{{education.dateFin|date('Y')}})</span>
+															</div>
+															<div class="date-of-time">
+																<span>4.30/5</span>
+															</div>
 														</div>
+														<p class="description">{{ education.description }}</p>
 													</div>
-													<p class="description">Architecture MVC, PHP, MySQL, Sécurité applicative, conception de base de données.</p>
 												</div>
-											</div>
+											{% endfor %}
 											<!-- End Single List  -->
 
-											<!-- Start Single List  -->
-											<div class="resume-single-list">
-												<div class="inner">
-													<div class="heading">
-														<div class="title">
-															<h4>Formation complémentaires PHP / MySQL / JavaScript</h4>
-															<span>Udemy (2019 - 2024)</span>
-														</div>
-													</div>
-													<p class="description">
-                                                        Approfondissement backend, programmation orientée objet et développement web.
-                                                    </p>
-												</div>
-											</div>
-											<!-- End Single List  -->
 										</div>
 									</div>
 								</div>
@@ -92,144 +88,35 @@
 								class="row row--40">
 
 								<!-- Start Single Progressbar  -->
+								{% for category in categories %}
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="progress-wrapper">
 										<div class="content">
-											<h4 class="maintitle">Design</h4>
+											<h4 class="maintitle">{{ category.title }}</h4>
 											<!-- Start Single Progress Charts -->
+											{% for skill in category.skills %}
 											<div class="progress-charts">
-												<h6 class="heading heading-h6">PHOTOSHOT</h6>
+												<h6 class="heading heading-h6">{{ skill.title }}</h6>
 												<div class="progress">
-													<div class="progress-bar wow fadeInLeft" data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar" style="width: 100%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-														<span class="percent-label">100%</span>
+													<div 
+														class="progress-bar wow fadeInLeft" 
+														data-wow-duration="0.5s" 
+														data-wow-delay=".3s" 
+														role="progressbar" 
+														style="width: {{ skill.percentage }}%" 
+														aria-valuenow="{{ skill.percentage }}" 
+														aria-valuemin="0" 
+														aria-valuemax="100">
+														<span class="percent-label">{{ skill.percentage }} %</span>
 													</div>
 												</div>
 											</div>
+											{% endfor %}
 											<!-- End Single Progress Charts -->
-
-											<!-- Start Single Progress Charts -->
-											<div class="progress-charts">
-												<h6 class="heading heading-h6">FIGMA</h6>
-												<div class="progress">
-													<div class="progress-bar wow fadeInLeft" data-wow-duration="0.6s" data-wow-delay=".4s" role="progressbar" style="width: 95%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-														<span class="percent-label">95%</span>
-													</div>
-												</div>
-											</div>
-											<!-- End Single Progress Charts -->
-
-											<!-- Start Single Progress Charts -->
-											<div class="progress-charts">
-												<h6 class="heading heading-h6">ADOBE XD</h6>
-												<div class="progress">
-													<div class="progress-bar wow fadeInLeft" data-wow-duration="0.7s" data-wow-delay=".5s" role="progressbar" style="width: 60%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-														<span class="percent-label">60%</span>
-													</div>
-												</div>
-											</div>
-											<!-- End Single Progress Charts -->
-
-											<!-- Start Single Progress Charts -->
-											<div class="progress-charts">
-												<h6 class="heading heading-h6">ADOBE ILLUSTRATOR</h6>
-												<div class="progress">
-													<div class="progress-bar wow fadeInLeft" data-wow-duration="0.8s" data-wow-delay=".6s" role="progressbar" style="width: 70%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-														<span class="percent-label">70%</span>
-													</div>
-												</div>
-											</div>
-											<!-- End Single Progress Charts -->
-
-											<!-- Start Single Progress Charts -->
-											<div class="progress-charts">
-												<h6 class="heading heading-h6">DESIGN</h6>
-												<div class="progress">
-													<div class="progress-bar wow fadeInLeft" data-wow-duration="0.9s" data-wow-delay=".7s" role="progressbar" style="width: 90%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-														<span class="percent-label">90%</span>
-													</div>
-												</div>
-											</div>
-											<!-- End Single Progress Charts -->
-
 										</div>
 									</div>
 								</div>
-								<!-- End Single Progressbar  -->
-
-								<!-- Start Single Progressbar  -->
-								<div class="col-lg-6 col-md-6 col-12 mt_sm--60">
-									<div class="progress-wrapper">
-										<div class="content">
-											<h4 class="maintitle">Développement</h4>
-											<!-- Start Single Progress Charts -->
-											<div class="progress-charts">
-												<h6 class="heading heading-h6">PHP</h6>
-												<div class="progress">
-													<div class="progress-bar wow fadeInLeft" data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-														<span class="percent-label">90%</span>
-													</div>
-												</div>
-											</div>
-											<!-- End Single Progress Charts -->
-
-											<!-- Start Single Progress Charts -->
-											<div class="progress-charts">
-												<h6 class="heading heading-h6">Laravel</h6>
-												<div class="progress">
-													<div class="progress-bar wow fadeInLeft" data-wow-duration="0.6s" data-wow-delay=".4s" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-														<span class="percent-label">85%</span>
-													</div>
-												</div>
-											</div>
-											<!-- End Single Progress Charts -->
-
-											<!-- Start Single Progress Charts -->
-											<div class="progress-charts">
-												<h6 class="heading heading-h6">MySQL</h6>
-												<div class="progress">
-													<div class="progress-bar wow fadeInLeft" data-wow-duration="0.7s" data-wow-delay=".5s" role="progressbar" style="width: 90%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-														<span class="percent-label">90%</span>
-													</div>
-												</div>
-											</div>
-											<!-- End Single Progress Charts -->
-
-											<!-- Start Single Progress Charts -->
-											<div class="progress-charts">
-												<h6 class="heading heading-h6">Symfony</h6>
-												<div class="progress">
-													<div class="progress-bar wow fadeInLeft" data-wow-duration="0.8s" data-wow-delay=".6s" role="progressbar" style="width: 75%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-														<span class="percent-label">75%</span>
-													</div>
-												</div>
-											</div>
-											<!-- End Single Progress Charts -->
-
-											<!-- Start Single Progress Charts -->
-											<div class="progress-charts">
-												<h6 class="heading heading-h6">HTML/CSS</h6>
-												<div class="progress">
-													<div class="progress-bar wow fadeInLeft" data-wow-duration="0.9s" data-wow-delay=".7s" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
-														<span class="percent-label">80%</span>
-													</div>
-												</div>
-											</div>
-											<!-- End Single Progress Charts -->
-
-											<!-- Start Single Progress Charts -->
-											<div class="progress-charts">
-												<h6 class="heading heading-h6">Git</h6>
-												<div class="progress">
-													<div class="progress-bar wow fadeInLeft" data-wow-duration="0.9s" data-wow-delay=".7s" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
-														<span class="percent-label">80%</span>
-													</div>
-												</div>
-											</div>
-											<!-- End Single Progress Charts -->
-
-										</div>
-									</div>
-								</div>
+								{% endfor %}
 								<!-- End Single Progressbar  -->
 
 							</div>
@@ -247,37 +134,25 @@
 								<!-- Start Skill List Area 2nd  -->
 								<div class="col-lg-12 col-md-12 col-12 mt_md--60 mt_sm--60">
 									<div class="content">
-										<span class="subtitle">2018 - Aujourd'hui</span>
+										<span class="subtitle">{{ experiencesStart.minDate|date('Y')}} - Aujourd'hui</span>
 										<h3 class="maintitle">Expérience professionnelle</h3>
 										<div
 											class="experience-list">
 
 											<!-- Start Single List  -->
+											{% for experience in experiences %}
 											<div class="resume-single-list">
 												<div class="inner">
 													<div class="heading">
 														<div class="title">
-															<h4>Développeur Web - Association BCJ37</h4>
-															<span>2024 - 2026</span>
+															<h4>{{ experience.title }}</h4>
+															<span>{{ experience.dateDebut|date('Y') }} - {{ experience.dateFin ? experience.dateFin|date('Y') : 'Aujourd\'hui' }}</span>
 														</div>
 													</div>
-													<p class="description">Développement Laravel, API Cuescore, back-office administrateur, scraping automatisé.</p>
+													<p class="description">{{ experience.description }}</p>
 												</div>
 											</div>
-											<!-- End Single List  -->
-
-											<!-- Start Single List  -->
-											<div class="resume-single-list">
-												<div class="inner">
-													<div class="heading">
-														<div class="title">
-															<h4>Dessinateur / Développeur - S.O.P.S</h4>
-															<span>2018 - 2025</span>
-														</div>
-													</div>
-													<p class="description">Développement d'outils internes PHP / MySQL, structuration de données techniques.</p>
-												</div>
-											</div>
+											{% endfor %}
 											<!-- End Single List  -->
 										</div>
 									</div>
@@ -301,135 +176,23 @@
 										<div
 											class="experience-list">
 
+											{% for education in educations %}
 											<!-- Start Single List  -->
 											<div data-aos="fade-up" data-aos-duration="500" data-aos-delay="300" data-aos-once="true" class="resume-single-list">
 												<div class="inner">
 													<div class="heading">
 														<div class="title">
-															<h4>Personal Portfolio April Fools</h4>
-															<span>University of DVI (1997 - 2001)</span>
+															<h4>{{ education.title }}</h4>
+															<span>University of DVI ({{education.dateDebut|date('Y')}} - {{education.dateFin|date('Y')}})</span>
 														</div>
 														<div class="date-of-time">
 															<span>4.30/5</span>
 														</div>
 													</div>
-													<p class="description">The education should be very interactual. Ut tincidunt est ac dolor aliquam sodales.
-														                                                                Phasellus sed mauris hendrerit, laoreet sem in, lobortis
-														                                                                mauris hendrerit ante.</p>
+													<p class="description">{{ education.description }}</p>
 												</div>
 											</div>
-											<!-- End Single List  -->
-
-											<!-- Start Single List  -->
-											<div data-aos="fade-up" data-aos-duration="500" data-aos-delay="500" data-aos-once="true" class="resume-single-list">
-												<div class="inner">
-													<div class="heading">
-														<div class="title">
-															<h4>
-																Examples Of Personal Portfolio</h4>
-															<span>College of Studies (2000 - 2002)</span>
-														</div>
-														<div class="date-of-time">
-															<span>4.50/5</span>
-														</div>
-													</div>
-													<p class="description">Maecenas finibus nec sem ut
-														                                                                imperdiet. Ut tincidunt est ac dolor aliquam sodales.
-														                                                                Phasellus sed mauris hendrerit, laoreet sem in, lobortis
-														                                                                mauris hendrerit ante.</p>
-												</div>
-											</div>
-											<!-- End Single List  -->
-
-											<!-- Start Single List  -->
-											<div data-aos="fade-up" data-aos-duration="500" data-aos-delay="700" data-aos-once="true" class="resume-single-list">
-												<div class="inner">
-													<div class="heading">
-														<div class="title">
-															<h4>Tips For Personal Portfolio</h4>
-															<span>University of Studies (1997 - 2001)</span>
-														</div>
-														<div class="date-of-time">
-															<span>4.80/5</span>
-														</div>
-													</div>
-													<p class="description">
-														If you are going to use a passage. Ut tincidunt est ac dolor aliquam sodales.
-														                                                                Phasellus sed mauris hendrerit, laoreet sem in, lobortis
-														                                                                mauris hendrerit ante.</p>
-												</div>
-											</div>
-											<!-- End Single List  -->
-
-										</div>
-									</div>
-								</div>
-								<!-- End Skill List Area  -->
-
-								<!-- Start Skill List Area 2nd  -->
-								<div class="col-lg-6 col-md-12 col-12 mt_md--60 mt_sm--60">
-									<div class="content">
-										<span class="subtitle">2007 - 2010</span>
-										<h4 class="maintitle">Job Experience</h4>
-										<div
-											class="experience-list">
-
-											<!-- Start Single List  -->
-											<div data-aos="fade-up" data-aos-duration="500" data-aos-delay="500" data-aos-once="true" class="resume-single-list">
-												<div class="inner">
-													<div class="heading">
-														<div class="title">
-															<h4>Diploma in Web Development</h4>
-															<span>BSE In CSE (2004 - 2008)</span>
-														</div>
-														<div class="date-of-time">
-															<span>4.70/5</span>
-														</div>
-													</div>
-													<p class="description">Contrary to popular belief. Ut tincidunt est ac dolor aliquam sodales.
-														                                                                Phasellus sed mauris hendrerit, laoreet sem in, lobortis
-														                                                                mauris hendrerit ante.</p>
-												</div>
-											</div>
-											<!-- End Single List  -->
-
-											<!-- Start Single List  -->
-											<div data-aos="fade-up" data-aos-duration="500" data-aos-delay="700" data-aos-once="true" class="resume-single-list">
-												<div class="inner">
-													<div class="heading">
-														<div class="title">
-															<h4>The Personal Portfolio Mystery</h4>
-															<span>Job at Rainbow-Themes (2008 - 2016)</span>
-														</div>
-														<div class="date-of-time">
-															<span>4.95/5</span>
-														</div>
-													</div>
-													<p class="description">Generate Lorem Ipsum which looks. Ut tincidunt est ac dolor aliquam sodales.
-														                                                                Phasellus sed mauris hendrerit, laoreet sem in, lobortis
-														                                                                mauris hendrerit ante.</p>
-												</div>
-											</div>
-											<!-- End Single List  -->
-
-											<!-- Start Single List  -->
-											<div data-aos="fade-up" data-aos-duration="500" data-aos-delay="900" data-aos-once="true" class="resume-single-list">
-												<div class="inner">
-													<div class="heading">
-														<div class="title">
-															<h4>Diploma in Computer Science</h4>
-															<span>Works at Plugin Development (2016 - 2020)</span>
-														</div>
-														<div class="date-of-time">
-															<span>5.00/5</span>
-														</div>
-													</div>
-													<p class="description">Maecenas finibus nec sem ut
-														                                                                imperdiet. Ut tincidunt est ac dolor aliquam sodales.
-														                                                                Phasellus sed mauris hendrerit, laoreet sem in, lobortis
-														                                                                mauris hendrerit ante.</p>
-												</div>
-											</div>
+											{% endfor %}
 											<!-- End Single List  -->
 
 										</div>

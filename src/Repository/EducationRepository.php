@@ -16,28 +16,27 @@ class EducationRepository extends ServiceEntityRepository
         parent::__construct($registry, Education::class);
     }
 
-    //    /**
-    //     * @return Education[] Returns an array of Education objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('e.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findAllEducations(): array
+    {
+        return $this->createQueryBuilder('ed')
+            ->select(
+                'ed.id,
+                ed.title,
+                ed.institution,
+                ed.dateDebut,
+                ed.dateFin,
+                ed.description'
+                )
+            ->orderBy('ed.dateDebut', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
-    //    public function findOneBySomeField($value): ?Education
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findEducationPeriod(): ?array
+    {
+        return $this->createQueryBuilder('ed')
+            ->select('MIN(ed.dateDebut) AS minDate, MAX(ed.dateFin) AS maxDate')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

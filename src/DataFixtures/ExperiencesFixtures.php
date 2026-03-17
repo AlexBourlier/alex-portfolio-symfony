@@ -15,11 +15,13 @@ class ExperiencesFixtures extends Fixture
 
         $experiences = [
             [
+                'title' => 'Développeur Backend',
                 'startDate' => '2020-01-01',
                 'endDate' => '2021-01-01',
                 'description' => 'Développement d\'applications backend en PHP et Symfony.',
             ],
             [
+                'title' => 'Développeur Frontend',
                 'startDate' => '2021-02-01',
                 'endDate' => '2022-01-01',
                 'description' => 'Développement d\'interfaces utilisateur en React et Vue.js.',
@@ -28,6 +30,7 @@ class ExperiencesFixtures extends Fixture
 
         foreach ($experiences as $experienceData) {
             $experience = new Experiences();
+            $experience->setTitle($experienceData['title']);
             $experience->setDateDebut(new \DateTime($experienceData['startDate']));
             $experience->setDateFin(new \DateTime($experienceData['endDate']));
             $experience->setDescription($experienceData['description']);
