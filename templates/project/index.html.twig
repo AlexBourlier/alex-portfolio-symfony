@@ -49,8 +49,37 @@
 						</div>
 					</div>
 				</div>
+				{% else %}
+				<p>Aucun projet trouvé.</p>
 				{% endfor %}
 				<!-- single skills -->
+				<!-- Pagination -->
+				{% if totalPages > 1 %}
+					<nav class="mt-4">
+						<ul class="pagination justify-content-center">
+
+							{% if currentPage > 1 %}
+								<li class="page-item">
+									<a class="page-link rn-btn" href="{{ path('app_project', { page: currentPage - 1 }) }}">Précédent</a>
+								</li>
+							{% endif %}
+
+							{% for page in 1..totalPages %}
+								<li class="page-item {% if page == currentPage %}active{% endif %}">
+									<a class="page-link rn-btn" href="{{ path('app_project', { page: page }) }}">{{ page }}</a>
+								</li>
+							{% endfor %}
+
+							{% if currentPage < totalPages %}
+								<li class="page-item">
+									<a class="page-link rn-btn" href="{{ path('app_project', { page: currentPage + 1 }) }}">Suivant</a>
+								</li>
+							{% endif %}
+
+						</ul>
+					</nav>
+				{% endif %}
+				<!-- Pagination -->
 
 			</div>
 		</div>

@@ -16,20 +16,23 @@ class ProjectsRepository extends ServiceEntityRepository
         parent::__construct($registry, Projects::class);
     }
 
-    public function getAllProjects(): array
+    public function findProjectsPaginated(int $page, int $limit = 3): array
     {
+        $offset = ($page - 1) * $limit;
+
         return $this->createQueryBuilder('p')
-         ->select(
-            'p.id,
-            p.title,
-            p.subtitle,
-            p.year,
-            p.picture,
-            p.speciality,
-            p.description'
-         )
-         ->orderBy('p.year', 'DESC')
-         ->getQuery()
-         ->getResult();
+            ->orderBy('p.year', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countProjects(): int
+    {
+        return (int) $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }
