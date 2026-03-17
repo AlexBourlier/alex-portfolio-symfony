@@ -29,13 +29,25 @@ final class ProjectController extends AbstractController
         ]);
     }
 
+    /**
+     * Ici la route pour accéder a un projet
+     */
     #[Route('/project/{slug}', name: 'app_project_show')]
-    public function show(string $slug): Response
+    public function show(string $slug, ProjectsRepository $projectsRepository): Response
     {
+
+        $title = str_replace('-', ' ', $slug);
+
+        $project = $projectsRepository->getProjectByTitle($title);
+
+        if (!$project) {
+            throw $this->createNotFoundException('Projet introuvable.');
+        }
+
         return $this->render('project/show.html.twig', [
             'controller_name' => 'ProjectController',
-            'slug' => $slug,
-            'title' => 'Détails du projet - Mon portfolio'
+            'title' => 'Détails du projet - Mon portfolio',
+            'project' => $project,
         ]);
     }
 }

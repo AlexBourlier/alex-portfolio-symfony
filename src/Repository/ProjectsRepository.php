@@ -35,4 +35,16 @@ class ProjectsRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * Afficher un projet via project/slug
+     */
+    public function getProjectByTitle(string $title): ?Projects
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.title = :title')
+            ->setParameter('title', $title)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

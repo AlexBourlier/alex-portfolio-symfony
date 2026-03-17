@@ -37,13 +37,13 @@
 							<h6 class="subtitle">
 								{{project.subtitle}}
 							</h6>
-							<p class="disc">{{ project.description }}</p>
+							<p class="disc">{{ project.description|split(' ')|slice(0, 25)|join(' ') }}...</p>
 
 						</div>
 					</div>
 					<div class="experience-right">
 						<div class="experience-footer">
-							<a class="rn-btn" href="{{ path('app_project_show', {'slug': project.title | replace({' ': '-'}) }) }}">
+							<a class="rn-btn" href="{{ path('app_project_show', {'slug': (project.title|replace({' ': '-'})) }) }}">
 								<span>EN VOIR PLUS</span>
 							</a>
 						</div>
