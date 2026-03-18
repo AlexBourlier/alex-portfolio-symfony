@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -46,6 +47,22 @@ class ContactType extends AbstractType
                 'attr' => [
                     'class' => 'rn-btn',
                 ],
+            ])
+            // Les champs suivants sont utilisés pour la protection anti-spam et ne sont pas mappés à ContactData
+            ->add('website', TextType::class, [
+                'mapped' => false,
+                'required' => false,
+                'label' => false,
+                'attr' => [
+                    'autocomplete' => 'off',
+                    'tabindex' => '-1',
+                    'style' => 'display:none;',
+                ],
+            ])
+            // Ce champ peut être utilisé pour enregistrer la date et l'heure de soumission du formulaire, ce qui peut aider à détecter les soumissions automatisées
+            ->add('submittedAt', HiddenType::class, [
+                'mapped' => false,
+                'data' => (new \DateTime())->format('Y-m-d H:i:s'),
             ])
         ;
     }

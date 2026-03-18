@@ -11,11 +11,19 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Attribute\Route;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 final class ContactController extends AbstractController
 {
     #[Route('/contact', name: 'app_contact')]
-    public function index(Request $request, MailerInterface $mailer): Response
+    public function index(
+    Request $request,
+    MailerInterface $mailer,
+    #[Autowire(service: 'limiter.contact_form')] RateLimiterFactory $contactLimiter,
+    LoggerInterface $logger
+    ): Response
     {
         $contactData = new ContactData();
 
@@ -23,10 +31,23 @@ final class ContactController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $limiter = $contactLimiter->create($request->getClientIp());
+
+            if (!$limiter->consume(1)->isAccepted()) {
+                $logger->warning('Rate limit contact dépassé', [
+                    'ip' => $request->getClientIp(),
+                ]);
+
+                $this->addFlash('error', 'Une erreur est survenue.');
+
+                return $this->redirectToRoute('app_contact');
+            }
+
             $email = (new Email())
-                ->from('no-reply@ton-domaine.fr')
+                ->from('no-reply@portfolio.local')
                 ->replyTo($contactData->email)
-                ->to('tonadresse@email.fr')
+                ->to('contact@portfolio.local')
                 ->subject('[Portfolio] ' . $contactData->subject)
                 ->text(
                     "Nom : {$contactData->name}\n" .
@@ -35,15 +56,11 @@ final class ContactController extends AbstractController
                     "Message :\n{$contactData->message}"
                 );
 
-            try {
-                $mailer->send($email);
+            $mailer->send($email);
 
-                $this->addFlash('success', 'Votre message a bien été envoyé.');
+            $this->addFlash('success', 'Votre message a bien été envoyé.');
 
-                return $this->redirectToRoute('app_contact');
-            } catch (TransportExceptionInterface $e) {
-                $this->addFlash('error', 'Une erreur est survenue lors de l’envoi du message.');
-            }
+            return $this->redirectToRoute('app_contact');
         }
 
         return $this->render('contact/index.html.twig', [
