@@ -44,7 +44,8 @@
 
             <script src="{{ asset('js/main.js') }}"></script>
         {% endblock %}
-        {% include 'partials/footerArea.html.twig' %}
+		{{ render(path('app_footer')) }}
+
 <!-- script Start -->
 {% include  'partials/script.html.twig'  %}
 <!-- script end -->

@@ -4,51 +4,44 @@
 			<div class="col-xl-6 col-12 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="logo-thumbnail">
 					<a href="#"><img src={{ asset("/assets/images/logo/alex.png") }} alt="logo-image"></a>
-                    <p>Développeur Web - Backend & Architecture Applicative</p>
+						<p>Développeur Full Stack</p>
+
 				</div>
 				<div class="social-icone-wrapper">
 					<ul class="social-share d-flex liststyle">
-						<li class="facebook">
-							<a href="#">
-								<i data-feather="linkedin"></i>
+					{% for social in socials %}
+						<li class="{{ social.icon }}">
+							<a href="{{ social.url }}">
+								<i data-feather="{{ social.icon }}"></i>
 							</a>
 						</li>
-						<li class="instagram">
-							<a href="#">
-								<i data-feather="instagram"></i>
-							</a>
-						</li>
-						<li class="linkedin">
-							<a href="#">
-								<i data-feather="twitter"></i>
-							</a>
-						</li>
+					{% endfor %}
 					</ul>
 				</div>
 			</div>
 			<div class="col-sl-6 col-12 mt_sm--20 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="menu-wrapper">
 					<div class="menu-title">
-						<h6>Portfolio</h6>
+						<h3>Portfolio</h3>
 					</div>
 					<ul class="menu-footer">
 						<li>
-							<a href="#">Accueil</a>
+							<a href="{{ path('app_home') }}">Accueil</a>
 						</li>
 						<li>
-							<a href="#">A Propos</a>
+							<a href="{{ path('app_about') }}">A Propos</a>
 						</li>
 						<li>
-							<a href="#">Compétences</a>
+							<a href="{{ path('app_skills') }}">Compétences</a>
 						</li>
 						<li>
-							<a href="#">Projets</a>
+							<a href="{{ path('app_project') }}">Projets</a>
 						</li>
 						<li>
-							<a href="#">Expérience</a>
+							<a href="{{ path('app_experience') }}">Expérience</a>
 						</li>
 						<li>
-							<a href="#">Me contacter</a>
+							<a href="{{ path('app_contact') }}">Me contacter</a>
 						</li>
 					</ul>
 				</div>
