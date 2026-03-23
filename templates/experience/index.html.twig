@@ -7,14 +7,13 @@
 	<div id="particles-js"></div>
 
 <!-- Start Experience Area -->
-<div id="experience" class="rn-experience-area experience-style-three rn-section-gap">
+<section id="experience" class="rn-experience-area experience-style-three rn-section-gap">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
 				<div data-aos="fade-up" data-aos-duration="500" data-aos-delay="100" data-aos-once="true" class="section-title text-center">
 				<span class="subtitle">Toutes mes réalisations</span>
 				<h2 class="title">Mon expérience</h2>
-
 				</div>
 			</div>
 		</div>
@@ -25,7 +24,7 @@
 
 					<!-- Start Single Portfolio  -->
 					{% for achievement in achievements %}
-					<div class="rn-portfolio-slick">
+					<article class="rn-portfolio-slick">
 						<div class="rn-portfolio" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
 							<div class="inner">
 								<div class="thumbnail">
@@ -46,7 +45,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</article>
 					{% endfor %}
 					<!-- End Single Portfolio  -->
 
@@ -54,7 +53,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</section>
 <!-- End portfolio Area -->
 
 {% endblock %}
