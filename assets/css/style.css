@@ -6175,6 +6175,9 @@ dt {
   font-weight: bold;
   color: var(--color-heading);
 }
+dd a{
+  color: var(--color-body);
+}
 
 menu,
 ol,
