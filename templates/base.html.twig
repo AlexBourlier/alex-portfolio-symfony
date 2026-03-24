@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 	<head>
 		<meta charset="UTF-8">
 		<title>
@@ -12,6 +12,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 		<link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
+		
 
 		{% block stylesheets %}
 			<link rel="stylesheet" href="{{ asset('css/vendor/bootstrap.min.css') }}">
@@ -26,7 +27,7 @@
 	</head>
 
 	<body class="template-color-1 spybody" data-spy="scroll" data-bs-target=".navbar-example2" data-offset="150" data-aos-easing="ease" data-aos-duration="400" data-aos-delay="0">
-		{% include 'partials/header.html.twig' %}
+		{{ render(path('app_header')) }}
 		{% block body %}{% endblock %}
 
         {% block javascripts %}
@@ -44,10 +45,14 @@
 
             <script src="{{ asset('js/main.js') }}"></script>
         {% endblock %}
-        {% include 'partials/footerArea.html.twig' %}
+		{{ render(path('app_footer')) }}
+
 <!-- script Start -->
 {% include  'partials/script.html.twig'  %}
 <!-- script end -->
+<!-- Retour haut de page -->
+{% include 'partials/backToTop.html.twig' %}
+<!-- Retour haut de page end -->
 
 <script>
 	particlesJS('particles-js', {

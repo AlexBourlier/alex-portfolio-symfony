@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AboutController!{% endblock %}
+{% block title %}
+	{{ title ?? 'Portfolio Alexandre Bourlier - A propos de moi' }}
+{% endblock %}
+
 
 {% block body %}
 
@@ -12,7 +15,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div data-aos="fade-up" data-aos-duration="500" data-aos-delay="100" data-aos-once="true" class="section-title text-center">
-					<h2 class="title">A Propos de moi</h2>
+					<h1 class="title mt-4">A Propos de moi</h1>
 				</div>
 			</div>
 		</div>
@@ -34,7 +37,7 @@
 				<div
 					data-aos="fade-up" data-aos-duration="500" data-aos-delay="200" data-aos-once="true" class="rn-nav-content tab-content" id="myTabContents">
 
-					<!-- Start Single Tab  -->
+					<!-- Start Single Tab / Education -->
 					<div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
 						<div class="personal-experience-inner mt--40">
 							<div
@@ -44,7 +47,7 @@
 									<div class="content">
 										<span class="subtitle">
 											{% if educationPeriods.minDate and educationPeriods.maxDate %}
-												{{ educationPeriods.minDate|date('Y') }} - {{ educationPeriods.maxDate|date('Y') }}
+												<time datetime="{{ educationPeriods.minDate|date('Y-m-d') }}">{{ educationPeriods.minDate|date('Y') }}</time> - <time datetime="{{ educationPeriods.maxDate|date('Y-m-d') }}">{{ educationPeriods.maxDate|date('Y') }}</time>
 											{% endif %}
 										</span>
 										<h3 class="maintitle">Formation</h3>
@@ -58,12 +61,12 @@
 														<div class="heading">
 															<div class="title">
 																<h4>{{ education.title }}</h4>
-																<span>{{ education.institution}} ({{education.dateDebut|date('Y')}}
+																<span>{{ education.institution}} (<time datetime="{{ education.dateDebut|date('Y-m-d') }}">{{ education.dateDebut|date('Y') }}</time>
 																	-
-																	{{education.dateFin|date('Y')}})</span>
+																	<time datetime="{{ education.dateFin|date('Y-m-d') }}">{{ education.dateFin|date('Y') }}</time>)</span>
 															</div>
 															<div class="date-of-time">
-																<span>4.30/5</span>
+																{# <span>4.30/5</span> #}
 															</div>
 														</div>
 														<p class="description">{{ education.description }}</p>
@@ -81,7 +84,7 @@
 					</div>
 					<!-- End Single Tab  -->
 
-					<!-- Start Single Tab  -->
+					<!-- Start Single Tab / Skill -->
 					<div class="tab-pane fade " id="professional" role="tabpanel" aria-labelledby="professional-tab">
 						<div class="personal-experience-inner mt--40">
 							<div
@@ -124,7 +127,7 @@
 					</div>
 					<!-- End Single Tab  -->
 
-					<!-- Start Single Tab  -->
+					<!-- Start Single Tab / Experience -->
                     <div class="tab-pane show active fade single-tab-area" id="experience" role="tabpanel" aria-labelledby="experience-tab">
 
 						<div class="personal-experience-inner mt--40">
@@ -134,7 +137,7 @@
 								<!-- Start Skill List Area 2nd  -->
 								<div class="col-lg-12 col-md-12 col-12 mt_md--60 mt_sm--60">
 									<div class="content">
-										<span class="subtitle">{{ experiencesStart.minDate|date('Y')}} - Aujourd'hui</span>
+										<span class="subtitle"><time datetime="{{ experiencesStart.minDate|date('Y-m-d') }}">{{ experiencesStart.minDate|date('Y') }}</time> - <time datetime="{{ "now"|date('Y-m-d') }}">Aujourd'hui</time></span>
 										<h3 class="maintitle">Expérience professionnelle</h3>
 										<div
 											class="experience-list">
@@ -146,7 +149,7 @@
 													<div class="heading">
 														<div class="title">
 															<h4>{{ experience.title }}</h4>
-															<span>{{ experience.dateDebut|date('Y') }} - {{ experience.dateFin ? experience.dateFin|date('Y') : 'Aujourd\'hui' }}</span>
+															<span><time datetime="{{ experience.dateDebut|date('Y-m-d') }}">{{ experience.dateDebut|date('Y') }}</time> - <time datetime="{{ experience.dateFin ? experience.dateFin|date('Y-m-d') : "now"|date('Y-m-d') }}">{{ experience.dateFin ? experience.dateFin|date('Y') : 'Aujourd\'hui' }}</time></span>
 														</div>
 													</div>
 													<p class="description">{{ experience.description }}</p>
@@ -154,47 +157,6 @@
 											</div>
 											{% endfor %}
 											<!-- End Single List  -->
-										</div>
-									</div>
-								</div>
-								<!-- End Skill List Area  -->
-							</div>
-						</div>
-					</div>
-					<!-- End Single Tab  -->
-
-					<!-- Start Single Tab  -->
-					<div class="tab-pane fade" id="interview" role="tabpanel" aria-labelledby="interview-tab">
-						<div class="personal-experience-inner mt--40">
-							<div
-								class="row">
-								<!-- Start Skill List Area  -->
-								<div class="col-lg-6 col-md-12 col-12">
-									<div class="content">
-										<span class="subtitle">2007 - 2010</span>
-										<h4 class="maintitle">Education Quality</h4>
-										<div
-											class="experience-list">
-
-											{% for education in educations %}
-											<!-- Start Single List  -->
-											<div data-aos="fade-up" data-aos-duration="500" data-aos-delay="300" data-aos-once="true" class="resume-single-list">
-												<div class="inner">
-													<div class="heading">
-														<div class="title">
-															<h4>{{ education.title }}</h4>
-															<span>University of DVI ({{education.dateDebut|date('Y')}} - {{education.dateFin|date('Y')}})</span>
-														</div>
-														<div class="date-of-time">
-															<span>4.30/5</span>
-														</div>
-													</div>
-													<p class="description">{{ education.description }}</p>
-												</div>
-											</div>
-											{% endfor %}
-											<!-- End Single List  -->
-
 										</div>
 									</div>
 								</div>

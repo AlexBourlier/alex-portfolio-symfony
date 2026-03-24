@@ -22,10 +22,10 @@
                                         <i data-feather="user">
                                         </i>
                                     </div>
-                                    <span class="date">{{ project.year|date('d M, Y') }}</span>
-                                    <h2 class="title">{{ project.title }}</h2>
+                                    <time class="date" datetime="{{ project.year|date('Y-m-d') }}">{{ project.year|date('d M, Y') }}</time>
+                                    <h1 class="title text-center mb-4">{{ project.title }}</h1>
 
-                                    <img src="{{ project.picture }}" alt="{{project.title}}" class="img-fluid feat-img">
+                                    <img src="{{ project.picture }}" alt="{{project.title}}" class="img-fluid feat-img m-auto d-block">
                                 </div>
                                 <div class="user-info-footer">
                                     <div class="news-details">
