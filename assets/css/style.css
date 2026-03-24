@@ -102,12 +102,12 @@
   --line-height-b1: 1.50;
   --line-height-b2: 1.6;
   --line-height-b3: 1.7;
-  --h1: 70px;
-  --h2: 60px;
+  --h1: 50px;
+  --h2: 40px;
   --h3: 30px;
-  --h4: 40px;
-  --h5: 30px;
-  --h6: 20px;
+  --h4: 20px;
+  --h5: 18px;
+  --h6: 16px;
 }
 
 * {
