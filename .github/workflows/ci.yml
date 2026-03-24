@@ -8,11 +8,35 @@ on:
 jobs:
   phpunit-tests:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: .
+
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_DATABASE: symfony
+          MYSQL_USER: symfony
+          MYSQL_PASSWORD: symfony
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      APP_ENV: test
+      APP_DEBUG: 1
+      APP_RUNTIME_ENV: test
+      KERNEL_CLASS: App\Kernel
+      APP_SECRET: test_secret
+      MAILER_DSN: null://null
+      DATABASE_URL: "mysql://symfony:symfony@127.0.0.1:3306/symfony?serverVersion=8.4&charset=utf8mb4"
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -20,6 +44,7 @@ jobs:
           php-version: "8.3"
           tools: composer:v2
           coverage: none
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql
 
       - name: Cache Composer
         uses: actions/cache@v4
@@ -31,19 +56,24 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-
 
-      - name: Install PHP dependencies
+      - name: Install dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
 
+      - name: Prepare test database
+        run: |
+          php bin/console doctrine:query:sql "SELECT 1" --env=test
+          php bin/console doctrine:database:create --env=test --if-not-exists
+          php bin/console doctrine:migrations:migrate --env=test --no-interaction
+
       - name: Run PHPUnit
-        run: vendor/bin/phpunit -c phpunit.xml
+        run: php bin/phpunit -c phpunit.dist.xml
 
   phpstan:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: .
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -51,6 +81,7 @@ jobs:
           php-version: "8.3"
           tools: composer:v2
           coverage: none
+          extensions: mbstring, xml, ctype, iconv, intl
 
       - name: Cache Composer
         uses: actions/cache@v4
@@ -62,7 +93,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-
 
-      - name: Install PHP dependencies
+      - name: Install dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
 
       - name: Run PHPStan
