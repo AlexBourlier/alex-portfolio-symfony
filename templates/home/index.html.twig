@@ -59,7 +59,7 @@
 																<i data-feather="map-pin" aria-hidden="true"></i>
 																<span>Localisation</span>
 															</dt>
-															<dd>{{ user.city }}, 37</dd>
+															<dd><address>{{ user.city }}, 37</address></dd>
 														</div>
 													</dl>
 												</div>
@@ -68,17 +68,17 @@
 									{% endfor %}
 
 									<div class="col-xl-12 col-lg-12 col-12">
-										<section class="user-info-bottom" aria-label="Actions principales">
+										<section class="user-info-bottom" aria-label="télécharger le CV">
 											<p>
 												Téléchargez mon CV ou contactez-moi pour discuter de votre projet.
 											</p>
 
 											<div class="button-wrapper d-flex mt-4">
-												<a class="rn-btn mr--30" href="{{ asset('assets/documents/CV_2026.pdf') }}" download>
+												<a class="rn-btn mr--30" href="{{ asset('assets/documents/CV_2026.pdf') }}" alt="Télécharger le CV" download>
 													<span>Télécharger mon CV</span>
 												</a>
 
-												<a class="rn-btn" href="{{ path('app_contact') }}">
+												<a class="rn-btn" href="{{ path('app_contact') }}" alt="Contactez-moi">
 													<span>Contactez-moi</span>
 												</a>
 											</div>
