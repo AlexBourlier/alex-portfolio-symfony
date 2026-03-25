@@ -23,7 +23,9 @@ class ExperiencesRepository extends ServiceEntityRepository
                 'e.title,
                 e.dateDebut,
                 e.dateFin,
-                e.description'
+                e.description,
+                e.isCurrent,
+                e.company'
                 )
             ->orderBy('e.dateDebut', 'ASC')
             ->getQuery()

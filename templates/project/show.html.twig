@@ -25,11 +25,12 @@
                                     <time class="date" datetime="{{ project.year|date('Y-m-d') }}">{{ project.year|date('d M, Y') }}</time>
                                     <h1 class="title text-center mb-4">{{ project.title }}</h1>
 
-                                    <img src="{{ project.picture }}" alt="{{project.title}}" class="img-fluid feat-img m-auto d-block">
+                                    <img src="{{ asset('uploads/images/projects/' ~ project.picture) }}" alt="Project screenshot: {{ project.title }}, demonstrating key features and implementation details" class="img-fluid feat-img m-auto d-block">
+
                                 </div>
                                 <div class="user-info-footer">
                                     <div class="news-details">
-                                        <p>{{project.description}}</p>
+                                        <p>{{project.description|raw }}</p>
                                     </div>
 
 

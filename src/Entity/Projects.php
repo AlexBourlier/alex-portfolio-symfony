@@ -34,6 +34,9 @@ class Projects
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $link = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -123,6 +126,18 @@ class Projects
         $this->description = $description;
         return $this;
     }
+
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    public function setLink(?string $link): static
+    {
+        $this->link = $link;
+        return $this;
+    }
+
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
