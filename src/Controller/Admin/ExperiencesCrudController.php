@@ -23,7 +23,7 @@ class ExperiencesCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('title'),
             TextField::new('company'),
-            TextField::new('description'),
+            TextEditorField::new('description'),
             BooleanField::new('isCurrent', 'Actuel'),
             DateField::new('dateDebut', 'Date de début'),
             DateField::new('dateFin', 'Date de fin'),
