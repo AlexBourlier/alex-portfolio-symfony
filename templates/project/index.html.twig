@@ -27,7 +27,7 @@
 				<div data-aos="fade-up" data-aos-duration="500" data-aos-delay="100" data-aos-once="true" class="experience-style-two">
 					<div class="experience-left">
 						<div class="experience-image">
-							<img src="{{ project.picture }}" alt="{{project.title}}">
+							<img src="{{ asset('uploads/images/projects/' ~ project.picture) }}" alt="{{project.title}}">
 						</div>
 						<div class="experience-center">
 							<span class="date">{{project.year|date('Y')}}</span>
@@ -37,12 +37,18 @@
 							<h3 class="subtitle">
 								{{project.subtitle}}
 							</h3>
-							<p class="disc">{{ project.description|split(' ')|slice(0, 25)|join(' ') }}...</p>
+							<p class="disc">{{ project.description|striptags|length > 50 ? project.description|striptags|slice(0, 50) ~ '...' : project.description|striptags }}</p>
 
 						</div>
 					</div>
 					<div class="experience-right">
 						<div class="experience-footer">
+						   {% if project.link %}
+							<a class="rn-btn mb--10" href="{{ project.link }}" target="_blank" rel="noopener noreferrer">
+								<span>VISITER LE PROJET</span>
+							</a>
+						   {% endif %}
+
 							<a class="rn-btn" href="{{ path('app_project_show', {'slug': (project.title|replace({' ': '-'})) }) }}">
 								<span>EN VOIR PLUS</span>
 							</a>

@@ -41,6 +41,7 @@ class DashboardController extends AbstractDashboardController
         ]);
         yield MenuItem::linkTo(EducationCrudController::class, 'Formations', 'fas fa-graduation-cap');
         yield MenuItem::linkTo(ExperiencesCrudController::class, 'Expériences professionnelles', 'fas fa-briefcase');
+        yield MenuItem::linkTo(ProjectsCrudController::class, 'Projets', 'fas fa-project-diagram');
         yield MenuItem::linkTo(SocialCrudController::class, 'Réseaux sociaux', 'fas fa-hashtag');
     }
 }
