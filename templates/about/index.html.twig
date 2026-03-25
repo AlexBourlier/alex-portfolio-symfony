@@ -148,8 +148,12 @@
 												<div class="inner">
 													<div class="heading">
 														<div class="title">
-															<h4>{{ experience.title }}</h4>
+															<h4>{{ experience.title }} - {{ experience.company }}</h4>
+															{% if experience.isCurrent == true %}
+															<span>Depuis <time datetime="{{ experience.dateDebut|date('Y-m-d') }}">{{ experience.dateDebut|date('Y') }}</time></span>
+															{% else %}
 															<span><time datetime="{{ experience.dateDebut|date('Y-m-d') }}">{{ experience.dateDebut|date('Y') }}</time> - <time datetime="{{ experience.dateFin ? experience.dateFin|date('Y-m-d') : "now"|date('Y-m-d') }}">{{ experience.dateFin ? experience.dateFin|date('Y') : 'Aujourd\'hui' }}</time></span>
+															{% endif %}
 														</div>
 													</div>
 													<p class="description">{{ experience.description }}</p>

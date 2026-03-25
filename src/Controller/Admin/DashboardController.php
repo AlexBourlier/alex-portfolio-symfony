@@ -2,6 +2,10 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Domain;
+use App\Entity\Education;
+use App\Entity\Skills;
+use App\Entity\SkillsCategory;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -27,7 +31,16 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkTo(UserCrudController::class, 'Utilisateur', 'fas fa-user');
-        yield MenuItem::linkTo(SkillsCrudController::class, 'Compétences', 'fas fa-cogs');
+        yield MenuItem::subMenu('Compétendes techniques', 'fas fa-cogs')->setSubItems([
+            MenuItem::linkTo(SkillsCategoryCrudController::class, 'Catégories de compétences', 'fas fa-cogs'),
+            MenuItem::linkTo(SkillsCrudController::class, 'Compétences techniques', 'fas fa-cogs'),
+        ]);
+        yield MenuItem::subMenu('Compétendes professionnelles', 'fas fa-cogs')->setSubItems([
+            MenuItem::linkTo(DomainCrudController::class, 'Domaines de compétences', 'fas fa-cogs'),
+            MenuItem::linkTo(CompetenciesCrudController::class, 'Compétences professionnelles', 'fas fa-cogs'),
+        ]);
+        yield MenuItem::linkTo(EducationCrudController::class, 'Formations', 'fas fa-graduation-cap');
+        yield MenuItem::linkTo(ExperiencesCrudController::class, 'Expériences professionnelles', 'fas fa-briefcase');
         yield MenuItem::linkTo(SocialCrudController::class, 'Réseaux sociaux', 'fas fa-hashtag');
     }
 }

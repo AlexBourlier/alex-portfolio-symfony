@@ -17,6 +17,9 @@ class Experiences
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $company = null;
+
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateDebut = null;
 
@@ -25,6 +28,9 @@ class Experiences
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $isCurrent = false;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -53,7 +59,19 @@ class Experiences
         $this->title = $title;
 
         return $this;
-    }   
+    }  
+    
+    public function getCompany(): ?string
+    {
+        return $this->company;
+    }
+
+    public function setCompany(string $company): static
+    {
+        $this->company = $company;
+
+        return $this;
+    }
 
     public function getDateDebut(): ?\DateTimeInterface
     {
@@ -88,6 +106,17 @@ class Experiences
     {
         $this->description = $description;
 
+        return $this;
+    }
+
+    public function isCurrent(): bool
+    {
+        return $this->isCurrent;
+    }
+
+    public function setIsCurrent(bool $isCurrent): self
+    {
+        $this->isCurrent = $isCurrent;
         return $this;
     }
 
