@@ -27,7 +27,7 @@
 				<div data-aos="fade-up" data-aos-duration="500" data-aos-delay="100" data-aos-once="true" class="experience-style-two">
 					<div class="experience-left">
 						<div class="experience-image">
-							<img src="{{ asset('uploads/images/projects/' ~ project.picture) }}" alt="{{project.title}}">
+							<img src="{{ ('uploads/images/projects/' ~ project.picture)|imagine_filter('miniature') }}" alt="{{ project.title }}">
 						</div>
 						<div class="experience-center">
 							<span class="date">{{project.year|date('Y')}}</span>

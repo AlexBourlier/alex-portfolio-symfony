@@ -5,7 +5,7 @@
 			<div class="header-left">
 				<div class="logo">
 					<a href="{{path('app_home')}}">
-						<img src={{ asset("/assets/images/logo/alex.png") }} alt="logo">
+						<img src="{{ '/assets/images/logo/alex.png'|imagine_filter('logo') }}" alt="logo">
 					</a>
 				</div>
 			</div>
@@ -61,7 +61,7 @@
 			<div class="menu-top">
 				<div class="menu-header">
 					<a class="logo" href="{{path('app_home')}}">
-						<img src={{ asset("/assets/images/logo/logo_mob.png") }} alt="Personal Portfolio">
+						<img src="{{ '/assets/images/logo/logo_mob.png'|imagine_filter('logo') }}" alt="Personal Portfolio">
 					</a>
 					<div class="close-button">
 						<button class="close-menu-activation close">
