@@ -29,7 +29,7 @@
 							<div class="inner">
 								<div class="thumbnail">
 									<a href="javascript:void(0)">
-										<img src="{{ asset('uploads/images/achievements/' ~ achievement.picture) }}" alt="{{ achievement.title }}">
+										<img src="{{ ('uploads/images/achievements/' ~ achievement.picture)|imagine_filter('miniature') }}" alt="{{ achievement.title }}">
 									</a>
 								</div>
 								<div class="content">

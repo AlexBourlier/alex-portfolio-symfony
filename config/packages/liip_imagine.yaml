@@ -1,0 +1,11 @@
+liip_imagine:
+    driver: "gd"
+    filter_sets:
+        miniature:
+            quality: 95
+            filters:
+                thumbnail:
+                    size: [480, 360]
+                    mode: outbound
+        logo:
+            quality: 95
