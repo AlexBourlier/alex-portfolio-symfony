@@ -47,7 +47,7 @@ final class ContactController extends AbstractController
             $email = (new Email())
                 ->from('no-reply@portfolio.local')
                 ->replyTo($contactData->email)
-                ->to('contact@portfolio.local')
+                ->to('alexandre@bourlier.email')
                 ->subject('[Portfolio] ' . $contactData->subject)
                 ->text(
                     "Nom : {$contactData->name}\n" .
